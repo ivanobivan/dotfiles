@@ -18,17 +18,15 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Load Debian menu entries
-local debian = require("debian.menu")
-local has_fdo, freedesktop = pcall(require, "freedesktop")
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+	naughty.notify({
+		preset = naughty.config.presets.critical,
+		title = "Oops, there were errors during startup!",
+		text = awesome.startup_errors,
+	})
 end
 
 -- Handle runtime errors after startup
@@ -111,12 +109,11 @@ myawesomemenu = {
 	},
 }
 
-local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_terminal = { "open terminal", terminal }
-
-mymainmenu = freedesktop.menu.build({
-	before = { menu_awesome },
-	after = { menu_terminal },
+mymainmenu = awful.menu({
+	items = {
+		{ "awesome", myawesomemenu, beautiful.awesome_icon },
+		{ "open terminal", terminal },
+	},
 })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon, menu = mymainmenu })
