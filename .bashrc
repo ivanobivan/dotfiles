@@ -111,7 +111,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 [ -f ~/.config/bash/aliases.bash ] && source ~/.config/bash/aliases.bash
 [ -f ~/.config/bash/functions.bash ] && source ~/.config/bash/functions.bash
-[ -f ~/.bash_profile ] && source ~/.bash_profile
+[ -f ~/.bash_prop ] && source ~/.bash_prop
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
