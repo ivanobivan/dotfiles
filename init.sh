@@ -5,6 +5,11 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+isArch() {
+  [ -f /etc/arch-release ] && return 0
+  return 1
+}
+
 log_ok() { printf "${GREEN}✔${NC} %s\n" "$1"; }
 log_info() { printf "${BLUE}➜${NC} %s\n" "$1"; }
 log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
@@ -12,11 +17,18 @@ log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
 install() {
     local pkg="$1"
 
-    if dpkg -s "$pkg" >/dev/null 2>&1; then
-        log_ok "$pkg already installed"
+
+    if isArch; then
+        log_info "Ensuring $pkg is installed"
+        sudo pacman -S --needed --noconfirm "$pkg"
+        return
     else
-        log_info "Installing $pkg"
-        sudo apt install -y "$pkg"
+        if dpkg -s "$pkg" >/dev/null 2>&1; then
+            log_ok "$pkg already installed"
+        else
+            log_info "Installing $pkg"
+            sudo apt install -y "$pkg"
+        fi
     fi
 }
 
@@ -33,7 +45,7 @@ install_packages() {
         build-essential
         ripgrep
         fd-find
-        network-manager
+        eza
 
         # usefull/pretty packages
         # neofetch
@@ -47,13 +59,25 @@ install_packages() {
         pass
         jq
 
+        #awesomewm packages
+        awesome
+
         # i3wm packages
-        i3 polybar i3lock xss-lock rofi feh picom pulsemixer brightnessctl flameshot
+        # i3 polybar i3lock xss-lock rofi feh picom pulsemixer brightnessctl flameshot
     )
+
+    #install only for arch
+    local arch_packages = (networkmanager, neovim, lazygit, nvm, kitty)
 
     for pkg in "${packages[@]}"; do
         install "$pkg"
     done
+
+    if [[ isArch ]]; then
+        for pkg in "${arch_packages[@]}"; do
+            install "$pkg"
+        done
+    fi
 }
 
 create_symlinks() {
@@ -66,10 +90,11 @@ create_symlinks() {
         "$SOURCE_CONFIG/lazygit:$DEST/lazygit"
         "$SOURCE_CONFIG/nvim:$DEST/nvim"
         "$SOURCE_CONFIG/ranger:$DEST/ranger"
-        "$SOURCE_CONFIG/i3:$DEST/i3"
+        # "$SOURCE_CONFIG/i3:$DEST/i3"
+        "$SOURCE_CONFIG/awesome:$DEST/awesome"
         # "$SOURCE_CONFIG/i3status:$DEST/i3status"
-        "$SOURCE_CONFIG/polybar:$DEST/polybar"
-        "$SOURCE_CONFIG/rofi:$DEST/rofi"
+        # "$SOURCE_CONFIG/polybar:$DEST/polybar"
+        # "$SOURCE_CONFIG/rofi:$DEST/rofi"
         "$SOURCE_CONFIG/bash:$DEST/bash"
         # "$SOURCE_CONFIG/fish:$DEST/fish"
         # "$SOURCE_CONFIG/waybar:$DEST/waybar"
@@ -108,6 +133,7 @@ ensure_fish() {
 }
 
 install_chrome() {
+    #TODO: add AUR
     if command -v google-chrome >/dev/null 2>&1; then
         log_ok "Google Chrome already installed"
         return
@@ -121,6 +147,7 @@ install_chrome() {
 }
 
 install_telegram() {
+    #TODO: add AUR
     if [ -d /opt/Telegram ]; then
         log_ok "Telegram already installed"
         return
@@ -234,17 +261,17 @@ main() {
     echo "====================================="
     echo "===        SYSTEM SETUP START     ==="
     echo "====================================="
-
+    
     install_packages
     # install_chrome
     # install_telegram
-    install_neovim
+    # install_neovim
     install_fonts
-    install_lazygit
-    install_nvm
+    # install_lazygit
+    # install_nvm
     # install_fnm
-    install_fzf
-    install_kitty
+    # install_fzf
+    # install_kitty
 
     create_symlinks
     # ensure_fish
