@@ -5,6 +5,11 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+FONTS=$HOME/.fonts
+DOWNLOAD=$HOME/Downloads
+WORKSPACE=$HOME/workspace
+CONFIG=$HOME/.config
+
 isArch() {
   [ -f /etc/arch-release ] && return 0
   return 1
@@ -40,7 +45,7 @@ install_packages() {
         curl
         wget
         tar
-        tree
+        # tree
         unzip
         build-essential
         ripgrep
@@ -49,8 +54,8 @@ install_packages() {
 
         # usefull/pretty packages
         # neofetch
-        # fastfetch
-        # fish
+        fastfetch
+        fish
         ranger
         translate-shell
         htop
@@ -161,11 +166,6 @@ install_telegram() {
 }
 
 install_neovim() {
-    if [ -d /opt/nvim-linux-x86_64 ]; then
-        log_ok "Neovim already installed"
-        return
-    fi
-
     log_info "Installing Neovim"
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
     sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
@@ -173,17 +173,13 @@ install_neovim() {
 }
 
 install_fonts() {
-    if ls ~/.fonts/JetBrainsMono*NerdFont* >/dev/null 2>&1; then
-        log_ok "JetBrainsMono Nerd Font already installed"
-        return
-    fi
-
-    log_info "Installing JetBrainsMono Nerd Font"
-    mkdir -p ~/.fonts
-    wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
-    unzip -q JetBrainsMono.zip -d ~/.fonts
+    log_info "Installing fonts"
+    mkdir -p $FONTS
+    wget -P $DOWNLOADS -O fonts.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/AdwaitaMono.tar.xz
+    wget -P $DOWNLOADS -O icons.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
+    tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/fonts.tar.xz -C $FONTS
+    tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/icons.tar.xz -C $FONTS
     fc-cache -f -v
-    rm JetBrainsMono.zip
 }
 
 install_lazygit() {
