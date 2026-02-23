@@ -11,8 +11,8 @@ WORKSPACE=$HOME/workspace
 CONFIG=$HOME/.config
 
 isArch() {
-  [ -f /etc/arch-release ] && return 0
-  return 1
+    [ -f /etc/arch-release ] && return 0
+    return 1
 }
 
 log_ok() { printf "${GREEN}✔${NC} %s\n" "$1"; }
@@ -21,7 +21,6 @@ log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
 
 install() {
     local pkg="$1"
-
 
     if isArch; then
         log_info "Ensuring $pkg is installed"
@@ -51,6 +50,13 @@ install_packages() {
         ripgrep
         fd-find
         eza
+        networkmanager
+        neovim
+        lazygit
+        nvm
+        kitty
+        openssh
+        imagemagick
 
         # usefull/pretty packages
         # neofetch
@@ -71,18 +77,9 @@ install_packages() {
         # i3 polybar i3lock xss-lock rofi feh picom pulsemixer brightnessctl flameshot
     )
 
-    #install only for arch
-    local arch_packages = (networkmanager, neovim, lazygit, nvm, kitty)
-
     for pkg in "${packages[@]}"; do
         install "$pkg"
     done
-
-    if [[ isArch ]]; then
-        for pkg in "${arch_packages[@]}"; do
-            install "$pkg"
-        done
-    fi
 }
 
 create_symlinks() {
@@ -257,7 +254,7 @@ main() {
     echo "====================================="
     echo "===        SYSTEM SETUP START     ==="
     echo "====================================="
-    
+
     install_packages
     # install_chrome
     # install_telegram
