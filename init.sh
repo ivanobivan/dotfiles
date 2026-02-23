@@ -7,7 +7,6 @@ NC='\033[0m'
 
 FONTS=$HOME/.fonts
 DOWNLOAD=$HOME/Downloads
-WORKSPACE=$HOME/workspace
 CONFIG=$HOME/.config
 
 isArch() {
@@ -21,19 +20,8 @@ log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
 
 install() {
     local pkg="$1"
-
-    if isArch; then
-        log_info "Ensuring $pkg is installed"
-        sudo pacman -S --needed --noconfirm "$pkg"
-        return
-    else
-        if dpkg -s "$pkg" >/dev/null 2>&1; then
-            log_ok "$pkg already installed"
-        else
-            log_info "Installing $pkg"
-            sudo apt install -y "$pkg"
-        fi
-    fi
+    log_info "Ensuring $pkg is installed"
+    sudo pacman -S --needed --noconfirm $pkg
 }
 
 install_packages() {
@@ -44,9 +32,8 @@ install_packages() {
         curl
         wget
         tar
-        # tree
+        tree
         unzip
-        build-essential
         ripgrep
         fd-find
         eza
@@ -57,9 +44,18 @@ install_packages() {
         kitty
         openssh
         imagemagick
+        lm_sensors
+        fzf
+
+        # emoji fonts
+        noto-fonts
+        noto-fonts-emoji
+
+        #pass packages
+        pass
+        gnupg
 
         # usefull/pretty packages
-        # neofetch
         fastfetch
         fish
         ranger
@@ -67,14 +63,14 @@ install_packages() {
         htop
         cmatrix
         xclip
-        pass
         jq
 
         #awesomewm packages
         awesome
+        rofi
 
         # i3wm packages
-        # i3 polybar i3lock xss-lock rofi feh picom pulsemixer brightnessctl flameshot
+        # i3 polybar i3lock xss-lock rofi feh picom brightnessctl
     )
 
     for pkg in "${packages[@]}"; do
@@ -96,7 +92,7 @@ create_symlinks() {
         "$SOURCE_CONFIG/awesome:$DEST/awesome"
         # "$SOURCE_CONFIG/i3status:$DEST/i3status"
         # "$SOURCE_CONFIG/polybar:$DEST/polybar"
-        # "$SOURCE_CONFIG/rofi:$DEST/rofi"
+        "$SOURCE_CONFIG/rofi:$DEST/rofi"
         "$SOURCE_CONFIG/bash:$DEST/bash"
         # "$SOURCE_CONFIG/fish:$DEST/fish"
         # "$SOURCE_CONFIG/waybar:$DEST/waybar"
@@ -122,53 +118,6 @@ create_symlinks() {
 
 }
 
-ensure_fish() {
-    local fish_path
-    fish_path="$(command -v fish || true)"
-
-    [ -z "$fish_path" ] && return 0
-    [ "$SHELL" = "$fish_path" ] && return 0
-
-    log_info "Switching login shell to fish"
-    chsh -s "$fish_path"
-    log_ok "Shell changed. Log out and log back in."
-}
-
-install_chrome() {
-    #TODO: add AUR
-    if command -v google-chrome >/dev/null 2>&1; then
-        log_ok "Google Chrome already installed"
-        return
-    fi
-
-    log_info "Installing Google Chrome"
-    wget -O /tmp/chrome.deb \
-        https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install -y /tmp/chrome.deb
-    rm /tmp/chrome.deb
-}
-
-install_telegram() {
-    #TODO: add AUR
-    if [ -d /opt/Telegram ]; then
-        log_ok "Telegram already installed"
-        return
-    fi
-
-    log_info "Installing Telegram"
-    wget -O /tmp/tg.tar https://telegram.org/dl/desktop/linux
-    tar -xf /tmp/tg.tar -C /tmp
-    sudo mv /tmp/Telegram /opt/
-    rm -rf /tmp/tg.tar
-}
-
-install_neovim() {
-    log_info "Installing Neovim"
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-    sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-    rm nvim-linux-x86_64.tar.gz
-}
-
 install_fonts() {
     log_info "Installing fonts"
     mkdir -p $FONTS
@@ -179,75 +128,17 @@ install_fonts() {
     fc-cache -f -v
 }
 
-install_lazygit() {
-    if command -v lazygit >/dev/null 2>&1; then
-        log_ok "Lazygit already installed"
-        return
-    fi
+install_aur() {
+    local packages = (
+        "https://aur.archlinux.org/google-chrome.git",
+        "https://aur.archlinux.org/telegram-desktop-bin.git"
+    )
 
-    log_info "Installing Lazygit"
-    local version
-    version=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest |
-        grep -Po '"tag_name": *"v\K[^"]*')
-
-    curl -Lo /tmp/lazygit.tar.gz \
-        "https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_Linux_x86_64.tar.gz"
-
-    tar xf /tmp/lazygit.tar.gz -C /tmp lazygit
-    sudo install /tmp/lazygit /usr/local/bin/
-    rm -f /tmp/lazygit*
-}
-
-install_nvm() {
-
-    if [ -d "$HOME/.nvm" ]; then
-        printf "${GREEN}✔${NC} NVM already installed\n"
-    else
-        printf "${BLUE}➜${NC} Installing NVM\n"
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-        export NVM_DIR="$HOME/.nvm"
-        source "$NVM_DIR/nvm.sh"
-        nvm install --lts
-        npm install -g tree-sitter-cli
-    fi
-}
-
-install_fnm() {
-    if command -v fnm >/dev/null 2>&1; then
-        log_ok "fnm already installed"
-        return
-    fi
-
-    log_info "Installing fnm"
-    curl -fsSL https://fnm.vercel.app/install | bash
-    log_ok "fnm installed (restart shell required)"
-}
-
-install_fzf() {
-    if [ -d "$HOME/.fzf" ]; then
-        log_ok "fzf already installed"
-        return
-    fi
-
-    log_info "Installing fzf"
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --all
-}
-
-install_kitty() {
-    if [ -d "$HOME/.local/kitty.app" ]; then
-        printf "${GREEN}✔${NC} Kitty already installed\n"
-    else
-        printf "${BLUE}➜${NC} Installing Kitty\n"
-        mkdir -p ~./local/bin
-        curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-        ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
-        cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
-        cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
-        sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
-        sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
-        echo 'kitty.desktop' >~/.config/xdg-terminals.list
-    fi
+    for pkg in "${packages[@]}"; do
+        git clone $pkg $DOWNLOADS/aur-package
+        makepkg -si -D $DOWNLOADS/aur-package
+        rm -rf $DOWNLOADS/aur-package
+    done
 }
 
 main() {
@@ -256,18 +147,10 @@ main() {
     echo "====================================="
 
     install_packages
-    # install_chrome
-    # install_telegram
-    # install_neovim
+    install_aur
     install_fonts
-    # install_lazygit
-    # install_nvm
-    # install_fnm
-    # install_fzf
-    # install_kitty
-
     create_symlinks
-    # ensure_fish
+    rm -rf $DOWNLOADS/*
 
     echo "====================================="
     echo "===      SYSTEM SETUP DONE        ==="

@@ -1,2 +1,2 @@
-exec awesome
 source $HOME/.xprofile
+exec awesome
