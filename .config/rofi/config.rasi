@@ -1,8 +1,8 @@
 configuration {
 /*	modes: "window,drun,run,ssh";*/
-font: "mono 9";
-/*	location: 0;*/
-/*	yoffset: 0;*/
+font: "Adwaita Mono 9";
+location: 0;
+yoffset: -50;
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
 show-icons: true;
@@ -141,6 +141,7 @@ terminal: "kitty";
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
   timeout {
+
       action: "kb-cancel";
       delay:  0;
   }
@@ -151,4 +152,4 @@ terminal: "kitty";
 }
 
 
-@theme "glue_pro_blue"
+@theme "/usr/share/rofi/themes/glue_pro_blue.rasi"
