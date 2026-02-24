@@ -299,6 +299,7 @@ root.buttons(gears.table.join(
 ))
 
 --  key bindings (hotkeys, keymaps)
+--  awesome (default) keys
 local globalkeys = gears.table.join(
 	awful.key({ modkey }, "/", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	awful.key({ modkey, "Shift" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
@@ -306,51 +307,6 @@ local globalkeys = gears.table.join(
 	awful.key({ modkey }, "r", function()
 		mymainmenu:show()
 	end, { description = "show main menu", group = "awesome" }),
-
-	awful.key({ modkey, "Shift" }, "Right", function()
-		beautiful.change_wallpaper(1)
-		set_wallpaper()
-	end, { description = "set next user wallpaper", group = "awesome" }),
-
-	awful.key({ modkey, "Shift" }, "Left", function()
-		beautiful.change_wallpaper(-1)
-		set_wallpaper()
-	end, { description = "set previous user wallpaper", group = "awesome" }),
-
-	-- LOCK
-	awful.key({ modkey }, "l", function()
-		awful.spawn(os.getenv("HOME") .. "/.config/awesome/scripts/lock.sh")
-	end, { description = "Lock Screen", group = "awesome" }),
-
-	-- printscrean (screenshot)
-	awful.key({}, "Print", function()
-		awful.spawn("flameshot gui")
-	end, { description = "Make screenshot by flameshot", group = "awesome" }),
-
-	awful.key({ altkey }, "Print", function()
-		awful.spawn(string.format("flameshot screen -p %s/screenshots", os.getenv("HOME")))
-	end, { description = "Make screenshot by flameshot", group = "awesome" }),
-
-	-- PULSEMIXER (AUDIO)
-	awful.key({}, "XF86AudioRaiseVolume", function()
-		os.execute(string.format("pulsemixer --change-volume +5 --max-volume 100"))
-		widgets.volume.update()
-	end, { description = "sounds volume up", group = "awesome" }),
-
-	awful.key({}, "XF86AudioLowerVolume", function()
-		os.execute(string.format("pulsemixer --change-volume -5 --max-volume 100"))
-		widgets.volume.update()
-	end, { description = "sounds volume down", group = "awesome" }),
-
-	awful.key({}, "XF86AudioMute", function()
-		os.execute(string.format("pulsemixer --toggle-mute"))
-		widgets.volume.update()
-	end, { description = "sounds volume down", group = "awesome" }),
-
-	-- ROFI
-	awful.key({ modkey }, "d", function()
-		awful.spawn("rofi -modi drun,run -show drun")
-	end, { description = "show rofi drun", group = "launcher" }),
 
 	-- tabs (navigations)
 	-- awful.key({ modkey, "Shift" }, "Tab", awful.tag.viewprev, { description = "view previous", group = "tag" }),
@@ -439,8 +395,57 @@ local globalkeys = gears.table.join(
 	end, { description = "show the menubar", group = "launcher" })
 )
 
-local clientkeys = gears.table.join(
+-- custom (user) hotkeys
+globalkeys = gears.table.join(
+	globalkeys,
+	-- wallpaper
+	awful.key({ modkey, "Shift" }, "Right", function()
+		beautiful.change_wallpaper(1)
+		set_wallpaper()
+	end, { description = "set next user wallpaper", group = "awesome" }),
 
+	awful.key({ modkey, "Shift" }, "Left", function()
+		beautiful.change_wallpaper(-1)
+		set_wallpaper()
+	end, { description = "set previous user wallpaper", group = "awesome" }),
+
+	-- lock
+	awful.key({ modkey }, "l", function()
+		awful.spawn(os.getenv("HOME") .. "/.config/awesome/scripts/lock.sh")
+	end, { description = "Lock Screen", group = "awesome" }),
+
+	-- printscrean (screenshot)
+	awful.key({}, "Print", function()
+		awful.spawn("flameshot gui")
+	end, { description = "Make screenshot by flameshot", group = "awesome" }),
+
+	awful.key({ altkey }, "Print", function()
+		awful.spawn(string.format("flameshot screen -p %s/screenshots", os.getenv("HOME")))
+	end, { description = "Make screenshot by flameshot", group = "awesome" }),
+
+	-- pulsemixer (audio)
+	awful.key({}, "XF86AudioRaiseVolume", function()
+		os.execute(string.format("pulsemixer --change-volume +5 --max-volume 100"))
+		widgets.volume.update()
+	end, { description = "sounds volume up", group = "awesome" }),
+
+	awful.key({}, "XF86AudioLowerVolume", function()
+		os.execute(string.format("pulsemixer --change-volume -5 --max-volume 100"))
+		widgets.volume.update()
+	end, { description = "sounds volume down", group = "awesome" }),
+
+	awful.key({}, "XF86AudioMute", function()
+		os.execute(string.format("pulsemixer --toggle-mute"))
+		widgets.volume.update()
+	end, { description = "sounds volume down", group = "awesome" }),
+
+	-- rofi
+	awful.key({ modkey }, "d", function()
+		awful.spawn("rofi -i -modi drun,run -show drun")
+	end, { description = "show rofi drun", group = "launcher" })
+)
+
+local clientkeys = gears.table.join(
 	awful.key({ modkey }, "f", function(c)
 		c.fullscreen = not c.fullscreen
 		c:raise()
