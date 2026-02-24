@@ -5,6 +5,7 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+SOURCE="$HOME/workspace/dotfiles"
 FONTS=$HOME/.fonts
 DOWNLOAD=$HOME/Downloads
 CONFIG=$HOME/.config
@@ -79,7 +80,6 @@ install_packages() {
 }
 
 create_symlinks() {
-    local SOURCE="$HOME/workspace/dotfiles"
     local SOURCE_CONFIG="$SOURCE/.config"
     local DEST="$HOME/.config"
 
@@ -125,6 +125,8 @@ install_fonts() {
     wget -P $DOWNLOADS -O icons.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
     tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/fonts.tar.xz -C $FONTS
     tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/icons.tar.xz -C $FONTS
+    
+    unzip $SOURCE/.fonts/digital-7.zip -d $FONTS -x '*.txt'
     fc-cache -f -v
 }
 
