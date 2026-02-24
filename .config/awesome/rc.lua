@@ -322,9 +322,13 @@ local globalkeys = gears.table.join(
 		awful.spawn(os.getenv("HOME") .. "/.config/awesome/scripts/lock.sh")
 	end, { description = "Lock Screen", group = "awesome" }),
 
-	-- PRINTSCREAN
+	-- printscrean (screenshot)
 	awful.key({}, "Print", function()
 		awful.spawn("flameshot gui")
+	end, { description = "Make screenshot by flameshot", group = "awesome" }),
+
+	awful.key({ altkey }, "Print", function()
+		awful.spawn(string.format("flameshot screen -p %s/screenshots", os.getenv("HOME")))
 	end, { description = "Make screenshot by flameshot", group = "awesome" }),
 
 	-- PULSEMIXER (AUDIO)
