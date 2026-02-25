@@ -28,9 +28,9 @@ local function update()
 	end
 
 	local used = mem_total - mem_free - buffers - cached
-	local usage_percent = used / mem_total * 100
+	local percent = used / mem_total * 100
 
-	utils.updateTextMarkup(mem, string.format("%.1f%%", usage_percent))
+	utils.updateTextMarkup(mem, string.format("%.1f%%", percent))
 end
 
 gears.timer({
