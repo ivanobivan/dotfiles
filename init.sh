@@ -69,6 +69,7 @@ install_packages() {
         #awesomewm packages
         awesome
         rofi
+        picom
 
         # i3wm packages
         # i3 polybar i3lock xss-lock rofi feh picom brightnessctl
@@ -94,8 +95,9 @@ create_symlinks() {
         # "$SOURCE_CONFIG/polybar:$DEST/polybar"
         "$SOURCE_CONFIG/rofi:$DEST/rofi"
         "$SOURCE_CONFIG/bash:$DEST/bash"
+        "$SOURCE_CONFIG/picom:$DEST/picom"
         # "$SOURCE_CONFIG/fish:$DEST/fish"
-        # "$SOURCE_CONFIG/waybar:$DEST/waybar"
+
         # not config files
         "$SOURCE/.bashrc:$HOME/.bashrc"
         "$SOURCE/.inputrc:$HOME/.inputrc"
@@ -125,18 +127,18 @@ install_fonts() {
     wget -P $DOWNLOADS -O icons.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
     tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/fonts.tar.xz -C $FONTS
     tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/icons.tar.xz -C $FONTS
-    
+
     unzip $SOURCE/.fonts/digital-7.zip -d $FONTS -x '*.txt'
     fc-cache -f -v
 }
 
 install_aur() {
-    local packages = (
-        "https://aur.archlinux.org/google-chrome.git",
+    local packages=(
+        "https://aur.archlinux.org/google-chrome.git"
         "https://aur.archlinux.org/telegram-desktop-bin.git"
     )
 
-    for pkg in "${packages[@]}"; do
+    for pkg in ${packages[@]}; do
         git clone $pkg $DOWNLOADS/aur-package
         makepkg -si -D $DOWNLOADS/aur-package
         rm -rf $DOWNLOADS/aur-package
@@ -148,9 +150,9 @@ main() {
     echo "===        SYSTEM SETUP START     ==="
     echo "====================================="
 
-    install_packages
-    install_aur
-    install_fonts
+    # install_packages
+    # install_aur
+    # install_fonts
     create_symlinks
     rm -rf $DOWNLOADS/*
 
