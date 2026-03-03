@@ -22,7 +22,7 @@ log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
 install() {
     local pkg="$1"
     log_info "Ensuring $pkg is installed"
-    sudo pacman -S --needed --noconfirm $pkg
+    sudo pacman -S --needed --noconfirm "$pkg"
 }
 
 install_packages() {
@@ -122,13 +122,13 @@ create_symlinks() {
 
 install_fonts() {
     log_info "Installing fonts"
-    mkdir -p $FONTS
-    wget -P $DOWNLOADS -O fonts.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/AdwaitaMono.tar.xz
-    wget -P $DOWNLOADS -O icons.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
-    tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/fonts.tar.xz -C $FONTS
-    tar -xv --exclude=*.md --exclude=LICENSE -f $DOWNLOADS/icons.tar.xz -C $FONTS
+    mkdir -p "$FONTS"
+    wget -P "$DOWNLOAD" -O fonts.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/AdwaitaMono.tar.xz
+    wget -P "$DOWNLOAD" -O icons.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
+    tar -xv --exclude=*.md --exclude=LICENSE -f "$DOWNLOAD/fonts.tar.xz" -C "$FONTS"
+    tar -xv --exclude=*.md --exclude=LICENSE -f "$DOWNLOAD/icons.tar.xz" -C "$FONTS"
 
-    unzip $SOURCE/.fonts/digital-7.zip -d $FONTS -x '*.txt'
+    unzip "$SOURCE/.fonts/digital-7.zip" -d "$FONTS" -x '*.txt'
     fc-cache -f -v
 }
 
@@ -138,10 +138,12 @@ install_aur() {
         "https://aur.archlinux.org/telegram-desktop-bin.git"
     )
 
-    for pkg in ${packages[@]}; do
-        git clone $pkg $DOWNLOADS/aur-package
-        makepkg -si -D $DOWNLOADS/aur-package
-        rm -rf $DOWNLOADS/aur-package
+    for pkg in "${packages[@]}"; do
+        git clone "$pkg" "$DOWNLOAD/aur-package"
+        cd "$DOWNLOAD/aur-package" || continue
+        makepkg -si --noconfirm
+        cd -
+        rm -rf "$DOWNLOAD/aur-package"
     done
 }
 
@@ -150,11 +152,10 @@ main() {
     echo "===        SYSTEM SETUP START     ==="
     echo "====================================="
 
-    # install_packages
-    # install_aur
-    # install_fonts
+    install_packages
+    install_aur
+    install_fonts
     create_symlinks
-    rm -rf $DOWNLOADS/*
 
     echo "====================================="
     echo "===      SYSTEM SETUP DONE        ==="
