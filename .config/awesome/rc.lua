@@ -166,7 +166,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
-	local icons = { "󰆍 ", " ", " ", "󰶍 ", " ", " ", " ", " ", " " }
+	local icons = { "󰆍 ", " ", " ", " ", " ", " ", " ", " ", " " }
 
 	awful.tag(icons, s, awful.layout.suit.max)
 
@@ -313,14 +313,17 @@ local globalkeys = gears.table.join(
 	awful.key({ modkey }, "`", awful.tag.viewnext, { description = "view next", group = "tag" }),
 	awful.key({ modkey }, "Escape", awful.tag.history.restore, { description = "go back", group = "tag" }),
 
-	awful.key({ modkey }, "Tab", function()
-		awful.client.focus.byidx(1)
-		if client.focus then
-			client.focus:raise()
+	awful.key({ altkey }, "Tab", function()
+		local c = awful.client.focus.history.list[2]
+		client.focus = c
+		local t = client.focus and client.focus.first_tag or nil
+		if t then
+			t:view_only()
 		end
+		c:raise()
 	end, { description = "focus next window", group = "client" }),
 
-	awful.key({ modkey, "Shift" }, "Tab", function()
+	awful.key({ altkey, "Shift" }, "Tab", function()
 		awful.client.focus.byidx(-1)
 		if client.focus then
 			client.focus:raise()
@@ -395,6 +398,8 @@ local globalkeys = gears.table.join(
 	end, { description = "show the menubar", group = "launcher" })
 )
 
+local SCRIPT_PATH = os.getenv("HOME") .. "/.config/awesome/scripts"
+
 -- custom (user) hotkeys
 globalkeys = gears.table.join(
 	globalkeys,
@@ -411,7 +416,7 @@ globalkeys = gears.table.join(
 
 	-- lock
 	awful.key({ modkey }, "l", function()
-		awful.spawn(os.getenv("HOME") .. "/.config/awesome/scripts/lock.sh")
+		awful.spawn(SCRIPT_PATH .. "/lock.sh")
 	end, { description = "Lock Screen", group = "awesome" }),
 
 	-- printscrean (screenshot)
@@ -423,7 +428,7 @@ globalkeys = gears.table.join(
 		awful.spawn(string.format("flameshot screen -p %s/screenshots", os.getenv("HOME")))
 	end, { description = "Make screenshot by flameshot", group = "awesome" }),
 
-	-- pulsemixer (audio)
+	-- pulsemixer (audio music)
 	awful.key({}, "XF86AudioRaiseVolume", function()
 		os.execute(string.format("pulsemixer --change-volume +5 --max-volume 100"))
 		widgets.volume.update()
@@ -441,8 +446,16 @@ globalkeys = gears.table.join(
 
 	-- rofi
 	awful.key({ modkey }, "d", function()
-		awful.spawn("rofi -i -modi drun,run -show drun")
-	end, { description = "show rofi drun", group = "launcher" })
+		awful.spawn("rofi -i -modi drun,run -show drun -theme default")
+	end, { description = "show rofi drun", group = "launcher" }),
+
+	awful.key({ modkey }, "Tab", function()
+		awful.spawn("rofi -modi window,windowcd -show window -no-fixed-num-lines -selected-row 1 -theme nav")
+	end, { description = "alt + tab", group = "launcher" }),
+
+	awful.key({ altkey }, "F4", function()
+		awful.spawn(SCRIPT_PATH .. "/powermenu.sh")
+	end, { description = "powermenu", group = "launcher" })
 )
 
 local clientkeys = gears.table.join(
