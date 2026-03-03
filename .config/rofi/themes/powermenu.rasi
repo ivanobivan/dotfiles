@@ -1,0 +1,11 @@
+@import "config/general"
+@import "config/icons"
+@import "colorscheme/nord"
+@import "presets/powermenu"
+
+
+* {
+  background-color: @bg0;
+  text-color: @fg0;
+}
+

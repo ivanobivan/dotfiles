@@ -1,0 +1,17 @@
+@import "themes/default"
+
+configuration {
+    show-icons: false;
+}
+
+element {
+    children: [];
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    scrollbar: false;
+}

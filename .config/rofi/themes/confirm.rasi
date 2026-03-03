@@ -1,0 +1,4 @@
+@import "config/general"
+@import "config/icons"
+@import "colorscheme/nord"
+@import "presets/confirm"

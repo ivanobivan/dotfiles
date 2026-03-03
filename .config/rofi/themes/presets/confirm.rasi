@@ -1,0 +1,32 @@
+* {
+    background-color: @bg0;
+    text-color: @fg0;
+    font: "Adwaita Mono 12";
+}
+
+window {
+    width: 225px;
+    padding: 2px;
+    border: 2px;
+    border-radius: 12px;
+    border-color: @blue;
+    location: center;
+}
+
+mainbox {
+    children:[ listview ];
+}
+
+listview {
+    scrollbar: false;
+    margin: 8px;
+    spacing: 8px;
+    cycle: true;
+    dynamic: true;
+    layout: horizontal;
+}
+
+element-text selected {
+    text-color: @red;
+}
+

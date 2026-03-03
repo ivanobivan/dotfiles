@@ -1,0 +1,32 @@
+window { location: east;
+    width: 80px;
+    x-offset: -15px;
+    y-offset: 0px;
+    border: 2px;
+    border-color: @blue;
+    border-radius: 16px;
+}
+
+listview {
+    lines: 5;
+    scrollbar: false;
+    margin: 8px;
+    spacing: 8px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+}
+
+mainbox {
+    children:[ listview ];
+}
+
+
+element-text {
+    font: "Adwaita Mono 20";
+    margin: 10px 0px 12px -8px;
+}
+
+element-text selected {
+    text-color: @red;
+}
