@@ -17,6 +17,8 @@ local settings = require("settings")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local SCRIPT_PATH = os.getenv("HOME") .. "/.config/awesome/scripts"
+
 -- Error handling
 if awesome.startup_errors then
 	naughty.notify({
@@ -398,8 +400,6 @@ local globalkeys = gears.table.join(
 	end, { description = "show the menubar", group = "launcher" })
 )
 
-local SCRIPT_PATH = os.getenv("HOME") .. "/.config/awesome/scripts"
-
 -- custom (user) hotkeys
 globalkeys = gears.table.join(
 	globalkeys,
@@ -654,5 +654,11 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 
--- autostart
+-- AUTOSTART
+-- picom
 awful.spawn.once(string.format("/usr/bin/picom --config %s/.config/picom/picom.conf", os.getenv("HOME")))
+
+-- auto locker
+awful.spawn.once("xset s 600")
+awful.spawn.once("xset dpms 300 600 1200")
+awful.spawn.once(string.format("xss-lock --transfer-sleep-lock -- %s/lock.sh", SCRIPT_PATH))

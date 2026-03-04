@@ -1,6 +1,7 @@
 #/bin/bash
 
 i3lock \
+    --nofork \
     --blur 8 \
     --clock \
     --indicator \
