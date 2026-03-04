@@ -428,17 +428,6 @@ globalkeys = gears.table.join(
 		awful.spawn(string.format("flameshot screen -p %s/screenshots", os.getenv("HOME")))
 	end, { description = "Make screenshot by flameshot", group = "awesome" }),
 
-	awful.key({ "Shift" }, "Print", function()
-		local date = os.date("%d-%m-%Y_%H-%M-%S")
-		awful.spawn.with_shell(
-			string.format(
-				"maim -s %s/screenshots/%s.png | xclip -selection clipboard -t image/png",
-				os.getenv("HOME"),
-				date
-			)
-		)
-	end, { description = "Screenshot area", group = "awesome" }),
-
 	-- pulsemixer (audio music)
 	awful.key({}, "XF86AudioRaiseVolume", function()
 		os.execute(string.format("pulsemixer --change-volume +5 --max-volume 100"))
