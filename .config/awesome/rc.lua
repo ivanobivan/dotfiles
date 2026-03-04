@@ -444,6 +444,18 @@ globalkeys = gears.table.join(
 		widgets.volume.update()
 	end, { description = "sounds volume down", group = "awesome" }),
 
+	-- brightnessctl
+
+	awful.key({}, "XF86MonBrightnessUp ", function()
+		os.execute(string.format("brightnessctl set +10%"))
+		widgets.volume.update()
+	end, { description = "bright volume up", group = "awesome" }),
+
+	awful.key({}, "XF86MonBrightnessDown  ", function()
+		os.execute(string.format("brightnessctl set -10%"))
+		widgets.volume.update()
+	end, { description = "bright volume up", group = "awesome" }),
+
 	-- rofi
 	awful.key({ modkey }, "d", function()
 		awful.spawn("rofi -i -modi drun,run -show drun -theme default")

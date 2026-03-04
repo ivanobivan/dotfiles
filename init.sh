@@ -65,9 +65,13 @@ install_packages() {
         awesome
         rofi
         picom
+        xss-lock
+        xorg-xset
+        brightnessctl
 
-        # i3wm packages
-        # i3 polybar i3lock xss-lock rofi feh picom brightnessctl
+        #lightdm
+        lightdm
+        lightdm-gtk-greeter
     )
 
     for pkg in "${packages[@]}"; do
@@ -143,7 +147,8 @@ install_fonts() {
 install_aur() {
     local packages=(
         "https://aur.archlinux.org/google-chrome.git"
-        "https://aur.archlinux.org/telegram-desktop-bin.git"
+        "https://aur.archlinux.org/telegram-desktop-bin.git",
+        "https://aur.archlinux.org/i3lock-color.git",
     )
 
     for pkg in "${packages[@]}"; do
