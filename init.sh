@@ -5,11 +5,6 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-SOURCE="$HOME/workspace/dotfiles"
-FONTS=$HOME/.fonts
-DOWNLOAD=$HOME/Downloads
-CONFIG=$HOME/.config
-
 isArch() {
     [ -f /etc/arch-release ] && return 0
     return 1
@@ -81,7 +76,8 @@ install_packages() {
 }
 
 create_symlinks() {
-    local SOURCE_CONFIG="$SOURCE/.config"
+    local SOURCE="$HOME/workspace/dotfiles"
+    local SOURCE_CONFIG="$HOME/workspace/dotfiles/.config"
     local DEST="$HOME/.config"
 
     local links=(
@@ -122,13 +118,25 @@ create_symlinks() {
 
 install_fonts() {
     log_info "Installing fonts"
-    mkdir -p "$FONTS"
-    wget -P "$DOWNLOAD" -O fonts.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/AdwaitaMono.tar.xz
-    wget -P "$DOWNLOAD" -O icons.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
-    tar -xv --exclude=*.md --exclude=LICENSE -f "$DOWNLOAD/fonts.tar.xz" -C "$FONTS"
-    tar -xv --exclude=*.md --exclude=LICENSE -f "$DOWNLOAD/icons.tar.xz" -C "$FONTS"
 
-    unzip "$SOURCE/.fonts/digital-7.zip" -d "$FONTS" -x '*.txt'
+    mkdir -p "$HOME/.fonts"
+    mkdir -p "$HOME/Downloads"
+
+    wget -O "$HOME/Downloads/fonts.tar.xz" \
+        https://github.com/ryanoasis/nerd-fonts/releases/latest/download/AdwaitaMono.tar.xz
+
+    wget -O "$HOME/Downloads/icons.tar.xz" \
+        https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.tar.xz
+
+    tar -xv --exclude='*.md' --exclude=LICENSE \
+        -f "$HOME/Downloads/fonts.tar.xz" -C "$HOME/.fonts"
+
+    tar -xv --exclude='*.md' --exclude=LICENSE \
+        -f "$HOME/Downloads/icons.tar.xz" -C "$HOME/.fonts"
+
+    unzip "$HOME/workspace/.fonts/digital-7.zip" \
+        -d "$HOME/.fonts" -x '*.txt'
+
     fc-cache -f -v
 }
 
@@ -139,11 +147,11 @@ install_aur() {
     )
 
     for pkg in "${packages[@]}"; do
-        git clone "$pkg" "$DOWNLOAD/aur-package"
-        cd "$DOWNLOAD/aur-package" || continue
+        git clone "$pkg" "$HOME/Downloads/aur-package"
+        cd "$HOME/Downloads/aur-package" || continue
         makepkg -si --noconfirm
         cd -
-        rm -rf "$DOWNLOAD/aur-package"
+        rm -rf "$HOME/Downloads/aur-package"
     done
 }
 
@@ -152,10 +160,10 @@ main() {
     echo "===        SYSTEM SETUP START     ==="
     echo "====================================="
 
-    install_packages
-    install_aur
-    install_fonts
-    create_symlinks
+    #install_packages
+    #install_aur
+    #install_fonts
+    #create_symlinks
 
     echo "====================================="
     echo "===      SYSTEM SETUP DONE        ==="
