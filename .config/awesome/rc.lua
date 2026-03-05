@@ -671,6 +671,6 @@ end)
 awful.spawn.once(string.format("/usr/bin/picom --config %s/.config/picom/picom.conf", os.getenv("HOME")))
 
 -- auto locker
-awful.spawn.once("xset s 600")
+awful.spawn.once("xset s 450")
 awful.spawn.once("xset dpms 300 600 1200")
 awful.spawn.once(string.format("xss-lock --transfer-sleep-lock -- %s/lock.sh", SCRIPT_PATH))
