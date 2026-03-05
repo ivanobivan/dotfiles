@@ -5,11 +5,6 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-isArch() {
-    [ -f /etc/arch-release ] && return 0
-    return 1
-}
-
 log_ok() { printf "${GREEN}✔${NC} %s\n" "$1"; }
 log_info() { printf "${BLUE}➜${NC} %s\n" "$1"; }
 log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
