@@ -67,6 +67,8 @@ install_packages() {
         #lightdm
         lightdm
         lightdm-gtk-greeter
+        materia-gtk-theme
+
     )
 
     for pkg in "${packages[@]}"; do
