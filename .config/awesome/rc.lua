@@ -458,7 +458,7 @@ globalkeys = gears.table.join(
 
 	-- rofi
 	awful.key({ modkey }, "d", function()
-		awful.spawn("rofi -i -modi drun,run -show drun -theme default")
+		awful.spawn("rofi -i -modi drun,run,ssh -show drun -theme default")
 	end, { description = "show rofi drun", group = "launcher" }),
 
 	awful.key({ modkey }, "Tab", function()
