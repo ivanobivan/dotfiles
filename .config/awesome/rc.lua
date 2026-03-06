@@ -316,13 +316,10 @@ local globalkeys = gears.table.join(
 	awful.key({ modkey }, "Escape", awful.tag.history.restore, { description = "go back", group = "tag" }),
 
 	awful.key({ altkey }, "Tab", function()
-		local c = awful.client.focus.history.list[2]
-		client.focus = c
-		local t = client.focus and client.focus.first_tag or nil
-		if t then
-			t:view_only()
+		awful.client.focus.byidx(1)
+		if client.focus then
+			client.focus:raise()
 		end
-		c:raise()
 	end, { description = "focus next window", group = "client" }),
 
 	awful.key({ altkey, "Shift" }, "Tab", function()
