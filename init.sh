@@ -94,6 +94,7 @@ create_symlinks() {
         "$SOURCE_CONFIG/rofi:$DEST/rofi"
         "$SOURCE_CONFIG/bash:$DEST/bash"
         "$SOURCE_CONFIG/picom:$DEST/picom"
+        "$SOURCE_CONFIG/htop:$DEST/htop"
         # "$SOURCE_CONFIG/fish:$DEST/fish"
 
         # not config files
