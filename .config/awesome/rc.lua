@@ -168,7 +168,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
-	local icons = { "󰆍 ", " ", " ", " ", " ", " ", " ", " ", " " }
+	local icons = { "󰆍 ", " ", " ", " ", " ", " ", " ", " ", " " }
 
 	awful.tag(icons, s, awful.layout.suit.max)
 
@@ -206,13 +206,13 @@ awful.screen.connect_for_each_screen(function(s)
 					id = "text_role",
 					widget = wibox.widget.textbox,
 				},
-				left = 8,
-				right = 8,
+				left = 9,
+				right = 4,
 				widget = wibox.container.margin,
 			},
 			id = "background_role",
 			widget = wibox.container.background,
-			shape = gears.shape.rounded_rect,
+			shape = gears.shape.rounded_bar,
 		},
 	})
 
