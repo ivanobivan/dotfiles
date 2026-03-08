@@ -37,6 +37,7 @@ install_packages() {
         imagemagick
         lm_sensors
         fzf
+        lsof
 
         # emoji fonts
         noto-fonts
