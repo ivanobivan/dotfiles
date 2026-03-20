@@ -24,6 +24,10 @@ require("lazy").setup({
                 colorscheme = "kanagawa",
             },
             import = "lazyvim.plugins",
+            news = {
+                lazyvim = false,
+                neovim = false,
+            },
         },
         --extras
         { import = "lazyvim.plugins.extras.lang.typescript" },
