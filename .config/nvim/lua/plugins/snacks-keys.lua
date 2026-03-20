@@ -21,35 +21,35 @@ return {
                 desc = "Copy full path",
             },
             {
-                "<leader>rr",
+                "<leader>hr",
                 function()
                     Snacks.picker.grep()
                 end,
                 desc = "Find",
             },
             {
-                "<leader>ra",
+                "<leader>ha",
                 function()
                     Snacks.picker.grep({ hidden = true, ignored = true })
                 end,
                 desc = "Find all",
             },
             {
-                "<leader>rs",
+                "<leader>hs",
                 function()
                     Snacks.picker.grep({ regex = false })
                 end,
                 desc = "Find without regex",
             },
             {
-                "<leader>rt",
+                "<leader>ht",
                 function()
                     Snacks.picker.grep({ glob = { "*.ts", "*.tsx" } })
                 end,
                 desc = "Find TS",
             },
             {
-                "<leader>rh",
+                "<leader>hh",
                 function()
                     Snacks.picker.grep({ glob = { "*.html" } })
                 end,
@@ -57,7 +57,7 @@ return {
             },
 
             {
-                "<leader>rl",
+                "<leader>hl",
                 function()
                     Snacks.picker.grep({ glob = { "*.less" } })
                 end,
