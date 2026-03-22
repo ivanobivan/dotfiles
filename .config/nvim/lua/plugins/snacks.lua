@@ -6,7 +6,7 @@ return {
                 timeout = 5000,
             },
             image = {
-                enabled = true,
+                enabled = false,
             },
         },
     },
