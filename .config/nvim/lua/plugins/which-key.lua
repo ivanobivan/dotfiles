@@ -8,8 +8,9 @@ return {
             end,
             sort = { "alphanum", "mod" },
             spec = {
-                { "<leader>h", group = "custom search", mode = "n", icon = "" },
+                { "<leader>r", group = "ripgrep", mode = "n", icon = "" },
                 { "<leader>d", group = "utils", mode = "n", icon = "" },
+                { "<leader>m", group = "LLM", mode = { "n", "v" }, icon = "" },
             },
         },
     },
