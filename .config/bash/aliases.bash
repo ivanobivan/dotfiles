@@ -2,6 +2,8 @@ alias ls='eza --icons always'
 alias l='ls -la'
 alias ".."="cd .."
 alias "..."="cd ../.."
+alias "...."="cd ../../.."
+alias "....."="cd ../../../.."
 alias "icat"="kitten icat"
 alias "ts"="trans -s ru -t en"
 alias "tsen"="trans -s en -t ru"
@@ -11,3 +13,4 @@ alias j="jobs"
 alias o="fg"
 alias gm="git log -1 --pretty=format:%B | copy"
 alias busy="docker run -it --rm svenstaro/genact -s 1"
+alias todo="meowdo"
