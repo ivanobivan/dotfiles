@@ -25,4 +25,5 @@ bind \e accept-autosuggestion
 # переход по папкам
 bind \ec fcd
 
+fnm env --use-on-cd | source
 fzf --fish | source
