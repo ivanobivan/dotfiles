@@ -4,3 +4,4 @@
 /.config/nvim/lua/prop
 /prop
 /.bash_prop
+/.config/fish/prop.fish
