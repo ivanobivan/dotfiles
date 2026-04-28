@@ -1,4 +1,4 @@
-function c
+function cp
     if test (count $argv) -gt 0
         set text (string join " " $argv)
     else
