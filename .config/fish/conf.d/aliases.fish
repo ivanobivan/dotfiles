@@ -14,3 +14,5 @@ alias o fg
 alias busy "docker run -it --rm svenstaro/genact -s 1"
 alias todo meowdo
 alias fd fdfind
+alias n nvim
+alias k kubectl
