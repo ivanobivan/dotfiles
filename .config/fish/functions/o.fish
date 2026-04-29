@@ -1,7 +1,8 @@
 function o
     if test (count $argv) -eq 0
-        echo "Usage: o <job_number>"
-        return 1
+        set job_number 1
+    else
+        set job_number $argv[1]
     end
-    fg %$argv[1]
+    fg %$job_number
 end
