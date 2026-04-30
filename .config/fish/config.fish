@@ -27,3 +27,5 @@ bind \ec fcd
 
 fnm env --use-on-cd | source
 fzf --fish | source
+
+cd ~/workspace
