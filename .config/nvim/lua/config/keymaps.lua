@@ -42,3 +42,7 @@ vim.keymap.set(
 vim.keymap.set({ "n", "v" }, "<leader>me", ":PrtExplain<CR>", { noremap = true, desc = "Explain code" })
 vim.keymap.set({ "n", "v" }, "<leader>mx", ":PrtFixBugs<CR>", { noremap = true, desc = "Fix bugs" })
 vim.keymap.set({ "n", "v" }, "<leader>mz", ":PrtOptimize<CR>", { noremap = true, desc = "Explain code" })
+
+-- quotes replace
+vim.keymap.set("v", "<leader>`", [[:s/'\(.*\)'/`\1`/g<CR>]])
+vim.keymap.set("v", '<leader>"', [[:s/"\(.*\)"/`\1`/g<CR>]])
