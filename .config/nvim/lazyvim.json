@@ -1,9 +1,10 @@
 {
-    "extras": [],
-    "install_version": 8,
-    "news": {
-        "NEWS.md": "11866"
-    },
-    "version": 8
+  "extras": [
+    "lazyvim.plugins.extras.lang.java"
+  ],
+  "install_version": 8,
+  "news": {
+    "NEWS.md": "11866"
+  },
+  "version": 8
 }
-
