@@ -17,3 +17,4 @@ alias n "nvim ."
 alias k kubectl
 alias re "source ~/.config/fish/config.fish"
 alias tmre "tmux source-file ~/.tmux.conf"
+alias ssh "kitty +kitten ssh"
