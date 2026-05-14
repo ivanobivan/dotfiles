@@ -3,6 +3,16 @@ return {
         "folke/snacks.nvim",
         keys = {
             {
+                "<leader>fr",
+                function()
+                    local relative = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":.")
+
+                    vim.fn.setreg("+", relative)
+                    vim.notify("Copied relative path: " .. relative)
+                end,
+                desc = "Copy relative path from cwd",
+            },
+            {
                 "<leader>fn",
                 function()
                     local file = vim.fn.expand("%:t")
@@ -16,9 +26,9 @@ return {
                 function()
                     local file = vim.fn.expand("%:p")
                     vim.fn.setreg("+", file)
-                    vim.notify("Copied full path: " .. file)
+                    vim.notify("Copied absolute path: " .. file)
                 end,
-                desc = "Copy full path",
+                desc = "Copy absolute path",
             },
             {
                 "<leader>rr",
