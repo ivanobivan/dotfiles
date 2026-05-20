@@ -102,6 +102,7 @@ create_symlinks() {
         "$SOURCE/.inputrc:$HOME/.inputrc"
         "$SOURCE/.xinitrc:$HOME/.xinitrc"
         "$SOURCE/.xprofile:$HOME/.xprofile"
+        "$SOURCE/.tmux.conf:$HOME/.tmux.conf"
     )
 
     for pair in "${links[@]}"; do
