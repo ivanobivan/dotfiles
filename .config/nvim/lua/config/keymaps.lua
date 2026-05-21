@@ -9,7 +9,7 @@ vim.keymap.set({ "n", "v" }, "<leader>dt", ":ToggleAlternate<CR>", { noremap = t
 vim.keymap.set({ "n", "i" }, "<leader>mn", ":PrtChatNew<CR>", { noremap = true, desc = "New chat" })
 vim.keymap.set({ "v" }, "<leader>mn", ":<C-u>'<,'>PrtChatNew<CR>", { noremap = true, desc = "New chat" })
 
-vim.keymap.set({ "n" }, "<localleader>\\", ":PrtChatResponde<CR>", { noremap = true, desc = "Responde" })
+vim.keymap.set({ "n" }, "<localleader>\\", ":PrtChatRespond<CR>", { noremap = true, desc = "Respond" })
 
 vim.keymap.set({ "n", "v" }, "<leader>mt", ":PrtChatToggle<CR>", { noremap = true, desc = "Toggle chat" })
 
@@ -39,9 +39,9 @@ vim.keymap.set(
     ":<C-u>'<,'>PrtComplete<cr>",
     { noremap = true, desc = "Inline complete" }
 )
-vim.keymap.set({ "n", "v" }, "<leader>me", ":PrtExplain<CR>", { noremap = true, desc = "Explain code" })
-vim.keymap.set({ "n", "v" }, "<leader>mx", ":PrtFixBugs<CR>", { noremap = true, desc = "Fix bugs" })
-vim.keymap.set({ "n", "v" }, "<leader>mz", ":PrtOptimize<CR>", { noremap = true, desc = "Explain code" })
+vim.keymap.set({ "n", "v" }, "<leader>mc", ":PrtExplain<CR>", { noremap = true, desc = "Explain code" })
+vim.keymap.set({ "n", "v" }, "<leader>mb", ":PrtFixBugs<CR>", { noremap = true, desc = "Fix bugs" })
+vim.keymap.set({ "n", "v" }, "<leader>mz", ":PrtOptimize<CR>", { noremap = true, desc = "Optimize code" })
 
 -- quotes replace
 vim.keymap.set("v", "<leader>`", [[:s/'\(.*\)'/`\1`/g<CR>]])

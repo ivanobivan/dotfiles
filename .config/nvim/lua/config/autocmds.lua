@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "typescript", "javascript", "html", "css", "less", "scss", "tsx", "jsx", "react", "saas", "sh", "lua" },
+    pattern = { "typescript", "javascript", "html", "css", "scss", "less", "tsx", "jsx", "react", "sass", "sh", "lua" },
     callback = function()
         vim.bo.shiftwidth = 4
         vim.bo.tabstop = 4

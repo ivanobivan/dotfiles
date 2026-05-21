@@ -34,7 +34,7 @@ return {
                                 return
                             end
                             local dir = vim.fs.dirname(item.file)
-                            local to = svim.fs.normalize(dir .. "/" .. value)
+                            local to = vim.fs.normalize(dir .. "/" .. value)
                             if uv.fs_stat(to) then
                                 Snacks.notify.warn("File already exists:\n- `" .. to .. "`")
                                 return
