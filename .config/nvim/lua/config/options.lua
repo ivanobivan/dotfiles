@@ -5,5 +5,5 @@ vim.g.snacks_animate = false
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 
--- format on save with eslint + prettier
+-- format on save with prettier (eslint для линтинга)
 vim.g.lazyvim_format_on_save = "lsp"
