@@ -20,8 +20,30 @@ return {
                 "yaml",
             },
             servers = {
-                vtsls = {},
-                angularls = {},
+                vtsls = {
+                    -- отключаем для Angular проектов, чтобы не дублировать angularls
+                    filetypes = {
+                        "typescript",
+                        "typescriptreact",
+                        "typescript.tsx",
+                        "javascript",
+                        "javascriptreact",
+                        "javascript.jsx",
+                    },
+                    init_options = {
+                        preferences = {
+                            -- отключаем медленные code actions
+                            includePackageJsonAutoImports = "off",
+                            providePrefixAndSuffixTextForRename = false,
+                        },
+                    },
+                },
+                angularls = {
+                    -- ускоряем code actions в angular
+                    init_options = {
+                        angularOnly = true,
+                    },
+                },
                 eslint = {},
                 prettier = {},
             },
