@@ -16,7 +16,9 @@ return {
                     continue = { "--continue" },
                 },
             },
-            prompts = {},
+            prompts = {
+                explain_sel = "Explain {selection}",
+            },
         },
     },
     keys = {
