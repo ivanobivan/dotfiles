@@ -1,7 +1,7 @@
 # PATH
-set -Ux PATH $PATH /opt/nvim-linux-x86_64/bin
-set -Ux PATH $PATH $HOME/.local/bin
-
+fish_add_path /opt/nvim-linux-x86_64/bin
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.local/share/coursier/bin
 
 set -Ux EDITOR nvim
 set -Ux VISUAL nvim
