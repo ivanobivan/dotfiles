@@ -13,7 +13,7 @@ alias j "jobs | sort"
 alias busy "docker run -it --rm svenstaro/genact -s 1"
 alias todo meowdo
 alias fd fdfind
-alias n nvim
+alias n "nvim ."
 alias k kubectl
 alias re "source ~/.config/fish/config.fish"
 alias tmre "tmux source-file ~/.tmux.conf"
