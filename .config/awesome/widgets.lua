@@ -8,6 +8,7 @@ local cpu_usage = require("widgets.cpu-usage")
 local mem = require("widgets.mem")
 local keyboard = require("widgets.keyboard")
 local battery = require("widgets.battery")
+local weather = require("widgets.weather")
 
 local M = {}
 
@@ -36,6 +37,7 @@ M.cpu_usage = wrapWidget(cpu_usage)
 M.mem = wrapWidget(mem)
 M.keyboard = wrapWidget(keyboard)
 M.battery = wrapWidget(battery)
-M.systray = wrapWidget(systray, 4, 4)
+M.systray = wrapWidget(systray, 4, 4, -4)
+M.weather = wrapWidget(weather)
 
 return M

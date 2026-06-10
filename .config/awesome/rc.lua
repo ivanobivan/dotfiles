@@ -276,6 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
 		{
 			layout = wibox.layout.fixed.horizontal,
 			widgets.systray,
+			widgets.weather,
 			widgets.mem,
 			widgets.cpu_usage,
 			widgets.cpu_temp,
