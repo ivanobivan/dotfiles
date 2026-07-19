@@ -9,10 +9,22 @@ log_ok() { printf "${GREEN}✔${NC} %s\n" "$1"; }
 log_info() { printf "${BLUE}➜${NC} %s\n" "$1"; }
 log_warn() { printf "${RED}!${NC} %s\n" "$1"; }
 
+# install() {
+#     local pkg="$1"
+#     log_info "Ensuring $pkg is installed"
+#     sudo pacman -S --needed --noconfirm "$pkg"
+# }
+
 install() {
     local pkg="$1"
-    log_info "Ensuring $pkg is installed"
-    sudo pacman -S --needed --noconfirm "$pkg"
+
+    if dpkg -s "$pkg" >/dev/null 2>&1; then
+        log_ok "$pkg already installed"
+        return
+    fi
+
+    log_info "Installing $pkg"
+    sudo apt install -y "$pkg"
 }
 
 install_packages() {
@@ -28,20 +40,20 @@ install_packages() {
         ripgrep
         fd-find
         eza
-        networkmanager
-        neovim
+        network-manager
+        #neovim
         lazygit
-        nvm
-        kitty
-        openssh
-        imagemagick
-        lm_sensors
+        #nvm
+        #kitty
+        openssh-client openssh-server
+        #imagemagick
+        #lm-sensors
         fzf
         lsof
 
         # emoji fonts
-        noto-fonts
-        noto-fonts-emoji
+        #noto-fonts
+        #noto-fonts-emoji
 
         #pass packages
         pass
@@ -50,7 +62,7 @@ install_packages() {
         # usefull/pretty packages
         fastfetch
         fish
-        ranger
+        #ranger
         translate-shell
         htop
         cmatrix
@@ -58,17 +70,17 @@ install_packages() {
         jq
 
         #awesomewm packages
-        awesome
-        rofi
-        picom
-        xss-lock
-        xorg-xset
-        brightnessctl
+        #awesome
+        #rofi
+        #picom
+        #xss-lock
+        #xorg-xset
+        #brightnessctl
 
         #lightdm
-        lightdm
-        lightdm-gtk-greeter
-        materia-gtk-theme
+        #lightdm
+        #lightdm-gtk-greeter
+        #materia-gtk-theme
 
     )
 
@@ -98,7 +110,7 @@ create_symlinks() {
         "$SOURCE_CONFIG/fish:$DEST/fish"
 
         # not config files
-        # "$SOURCE/.bashrc:$HOME/.bashrc"
+        "$SOURCE/.bashrc:$HOME/.bashrc"
         # "$SOURCE/.inputrc:$HOME/.inputrc"
         # "$SOURCE/.xinitrc:$HOME/.xinitrc"
         # "$SOURCE/.xprofile:$HOME/.xprofile"
@@ -165,10 +177,10 @@ main() {
     echo "===        SYSTEM SETUP START     ==="
     echo "====================================="
 
-    #install_packages
+    # install_packages
     #install_aur
     #install_fonts
-    #create_symlinks
+    create_symlinks
 
     echo "====================================="
     echo "===      SYSTEM SETUP DONE        ==="
