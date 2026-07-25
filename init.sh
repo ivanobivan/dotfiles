@@ -45,6 +45,7 @@ install_packages() {
         lazygit
         #nvm
         #kitty
+        kitty-terminfo
         openssh-client openssh-server
         #imagemagick
         #lm-sensors
