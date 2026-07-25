@@ -31,6 +31,7 @@ install_packages() {
 
     local packages=(
         # required packages
+        make
         vim
         curl
         wget
