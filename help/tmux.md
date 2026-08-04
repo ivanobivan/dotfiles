@@ -1,0 +1,19 @@
+- `Alt + h` — Go to previous window
+- `Alt + l` — Go to next window
+- `Alt + u` — Swap window with previous and move to it
+- `Alt + i` — Swap window with next and move to it
+- `Alt + 1` … `Alt + 9` — Select window 1–9
+- `Alt + Left` — Select pane on the left
+- `Alt + Right` — Select pane on the right
+- `Alt + Up` — Select pane above
+- `Alt + Down` — Select pane below
+- `Ctrl + Shift + Left` — Resize pane left by 5 cells
+- `Ctrl + Shift + Right` — Resize pane right by 5 cells
+- `Ctrl + Shift + Up` — Resize pane up by 5 cells
+- `Ctrl + Shift + Down` — Resize pane down by 5 cells
+- `Alt + t` — Create new window
+- `Alt + w` — Kill current window (with confirmation)
+- `Alt + r` — Rename current window
+- `Alt + v` — Split window vertically (left/right panes)
+- `Alt + s` — Split window horizontally (top/bottom panes)
+- `Alt + q` — Detach from tmux session

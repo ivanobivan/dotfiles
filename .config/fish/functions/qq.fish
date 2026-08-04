@@ -2,7 +2,8 @@ function qq
     set dir ~/workspace/dotfiles/help
 
     if test (count $argv) -eq 0
-        ls $dir/*.md 2>/dev/null | xargs -n1 basename | sed 's/.md$//'
+        ls $dir/*.md 2>/dev/null | xargs -n1 basename | sed 's/.md$//' | tr '\n' ' '
+        echo
         return 1
     end
 
