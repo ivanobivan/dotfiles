@@ -1,10 +1,32 @@
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "typescript", "javascript", "html", "css", "scss", "less", "tsx", "jsx", "react", "sass", "sh", "lua", "java" },
+    pattern = {
+        "typescript",
+        "javascript",
+        "html",
+        "css",
+        "scss",
+        "less",
+        "tsx",
+        "jsx",
+        "react",
+        "sass",
+        "sh",
+        "lua",
+        "java",
+    },
     callback = function()
         vim.bo.shiftwidth = 4
         vim.bo.tabstop = 4
         vim.bo.softtabstop = 4
         vim.bo.expandtab = true
+    end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown" },
+    callback = function()
+        -- This tells LazyVim to completely bypass formatting for this file type
+        vim.b.autoformat = false
     end,
 })
 
